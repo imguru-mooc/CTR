@@ -10,63 +10,56 @@ https://www.python.org/
 Download Windows installer (64-bit)
 로 다운 로드 후 설치 
 
-- !!Check Add python path - reboot
+- !!Check Add python path 
 
  
 3. 가상 환경 만들기 
 현재 폴더에서 탐색기의 경로에 cmd를 입력하여 실행
 
-D:\CTR-main\smartfactory> python -m venv .venv
-D:\CTR-main\smartfactory> .venv\Scripts\activate
-(.venv) D:\CTR-main\smartfactory>
+D:\CTR-main> python -m venv .venv
+D:\CTR-main> .venv\Scripts\activate
+(.venv) D:\CTR-main>
 
-3. 최신 pip로 업그레이드 
-(.venv) D:\CTR-main\smartfactory> python -m pip install --upgrade pip
+4. 최신 pip로 업그레이드 
+(.venv) D:\CTR-main> python -m pip install --upgrade pip
 
-4. opencv 설치
-(.venv) D:\CTR-main\smartfactory> python -m pip install opencv-contrib-python
-
-
-5. Run jupyter notebook 
-
-opencv 예제 실행
+5. opencv 설치
+(.venv) D:\CTR-main> pip install opencv-contrib-python
 
 
 6. openVINO runtime download
 
 https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/download.html
 
-Runtime - 2022.1 - offline installer
+위 내용 참조
 
  
 
 7. (In conda or virtual environment) openVINO dev download
 
-(.venv) D:\CTR-main\smartfactory> pip install openvino-dev[onnx,tensorflow2]==2022.1.0
+(.venv) D:\CTR-main> pip install openvino-dev[onnx,tensorflow2]==2022.1.0
 
  
-
-8. (In conda or virtual environment) Run openVINO setupvars.bat
-
-(.venv) D:\CTR-main\smartfactory> cd "C:\Program Files (x86)\Intel\openvino_2022.1.0.643"
-(.venv) D:\CTR-main\smartfactory> setupvars.bat
-
-9. open model zoo 다운 로드 
+8. open model zoo 다운 로드 
 
 https://github.com/openvinotoolkit/open_model_zoo
 
 zip 파일 다운 로드 후 프로젝트 디렉토리에 압축 해제 한다.
 
+9. 필요 패키지 설치
+필요 패키지 설치
+(.venv) D:\CTR-main> pip install -r requirements.txt
+
+
 10. 모델 다운 로드 및 테스트 
 
-아래 디렉토리로 이동
-
-D:\CTR-main\smartfactory\open_model_zoo-master\demos
+아래 데모 디렉토리로 이동
+(.venv) D:\CTR-main> cd open_model_zoo-master\demos
 
 공식 인식 모델 테스트 
 
 아래 디렉토리로 이동
-(.venv) D:\CTR-main\smartfactory\open_model_zoo-master\demos\formula_recognition_demo\python>
+(.venv) D:\CTR-main\open_model_zoo-master\demos> cd formula_recognition_demo\python
 
 모델 다운 로드 
 omz_downloader --list models.lst
@@ -82,32 +75,24 @@ formula-recognition-medium-scan-0001-im2latex-encoder.xml
 
 python formula_recognition_demo.py -i sample.png  -m_encoder models/formula-recognition-medium-scan-0001-im2latex-encoder.xml  -m_decoder models/formula-recognition-medium-scan-0001-im2latex-decoder.xml  --vocab_path intel/formula-recognition-medium-scan-0001/formula-recognition-medium-scan-0001-im2latex-decoder/vocab.json  --preprocessing resize
 
-손글씨 인식
-python formula_recognition_demo.py -i sample2.png  -m_encoder models/formula-recognition-polynomials-handwritten-0001-encoder.xml  -m_decoder models/formula-recognition-polynomials-handwritten-0001-decoder.xml  --vocab_path intel\formula-recognition-polynomials-handwritten-0001\formula-recognition-polynomials-handwritten-0001-decoder/vocab.json  --preprocessing resize
-
 
 동영상 링크
 https://drive.google.com/drive/folders/1cZpY5xPHWLRceHZXFa10LPuEX95pXEoF?usp=sharing
 
-
-
 model api 설치
+pip install D:\CTR-main\open_model_zoo-master/demos/common/python
 
-pip install D:\CTR-main\smartfactory\open_model_zoo-master/demos/common/python
+
+models.lst 파일중 아래 줄만 남기고 지운다.
+ssd300
+
+모델 다운 로드 
+omz_downloader --list models.lst
+
+모델 컨버팅
+omz_converter --list models.lst
 
 
 object detection 명령
-
-python object_detection_demo.py   -d CPU -i object_detection_test.mp4   -m models/ssd300.xml  -at ssd  --labels D:\CTR-main\smartfactory\open_model_zoo-master/data/dataset_classes/voc_20cl_bkgr.txt
-
-human_post 명령
-
-python human_pose_estimation_demo.py -d CPU   -i human_pose_test.mp4   -m models/human-pose-estimation-0005.xml   -at ae
-
-
-
-
-
-
-
+python object_detection_demo.py   -d CPU -i object_detection_test.mp4   -m models/ssd300.xml  -at ssd  --labels D:\CTR-main\open_model_zoo-master/data/dataset_classes/voc_20cl_bkgr.txt
 
